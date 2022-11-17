@@ -7,17 +7,19 @@ router = APIRouter(prefix="/highscore", tags=["Highscore"])
 
 @router.get("/highscore")
 async def get_highscore():
-    return ""
+    return await example.get("key")
 
 
 @router.get("/highscore/{name}")
 async def get_highscore_by_name(name: str):
-    return ""
+    return await example.get(name)
 
 
 @router.post("/highscore")
-async def post_highscore():
-    return ""
+async def post_highscore(data):
+    value = await example("key", data)
+    print(value)
+    return value
 
 
 @router.delete("/highscore/{name}")
