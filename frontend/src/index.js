@@ -153,9 +153,14 @@ function sceneMenu() {
   canvas.addEventListener("click", startGame);
 }
 
-function loseHealth() {
+async function loseHealth() {
   player.health -= 1;
   shakeDuration = 5;
+
+  if (!hasSentStartRequest) {
+    await postLightFill({ color: { r: 255, g: 0, b: 0 } });
+    hasSentStartRequest = true;
+  }
 
   if (player.health <= 0) {
     scene = "lose";
@@ -163,15 +168,18 @@ function loseHealth() {
 }
 
 async function sceneLevel1() {
-  await postLightScrollingText({
-    text: "GAME START",
-    text_speed: 0.12,
-    color: {
-      r: 0,
-      g: 255,
-      b: 0,
-    },
-  });
+  if (!hasSentStartRequest) {
+    await postLightScrollingText({
+      text: "GAME START",
+      text_speed: 0.12,
+      color: {
+        r: 0,
+        g: 255,
+        b: 0,
+      },
+    });
+    hasSentStartRequest = true;
+  }
 
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   enemyController.draw(ctx);
@@ -204,15 +212,19 @@ async function sceneLevel1() {
 let isGameOverRun = false;
 async function sceneGameOver() {
   if (!isGameOverRun) {
-    await postLightScrollingText({
-      text: "GAME OVER",
-      text_speed: 0.12,
-      color: {
-        r: 255,
-        g: 0,
-        b: 0,
-      },
-    });
+    if (!hasSentStartRequest) {
+      await postLightScrollingText({
+        text: "GAME OVER",
+        text_speed: 0.12,
+        color: {
+          r: 255,
+          g: 0,
+          b: 0,
+        },
+      });
+      hasSentStartRequest = true;
+    }
+
     isGameOverRun = true;
   }
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
