@@ -169,6 +169,7 @@ function sceneLevel1() {
   enemyBulletController.draw(ctx);
 
   drawScore(enemyController.score);
+  drawHp(player.health);
 
   if (enemyBulletController.collideWith(player)) {
     loseHealth();
@@ -207,7 +208,15 @@ function drawScore(score) {
   ctx.font = "30px Arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  ctx.fillText(score + " points", 150, 100);
+  ctx.fillText(score + " points", 80, 50);
+}
+
+function drawHp(score) {
+  ctx.fillStyle = "white";
+  ctx.font = "30px Arial";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText(score + " hp", 50, canvas.height - 30);
 }
 
 function sceneVictory() {
