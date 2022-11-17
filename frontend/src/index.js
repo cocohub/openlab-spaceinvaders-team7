@@ -34,6 +34,7 @@ const buttonMap = {
   },
   2: () => {
     console.log("B");
+    scene = "win";
   },
   3: () => {
     console.log("Y");
@@ -51,6 +52,8 @@ const buttonMap = {
   },
   9: () => {
     console.log("START");
+    isSceneInitilized = false;
+    scene = "level1";
   },
 };
 
@@ -91,9 +94,6 @@ async function gameLoop() {
       return sceneVictory();
   }
 }
-
-
-
 
 function initMenu() {
   background = new Image();
@@ -137,12 +137,12 @@ function initLevel1() {
 function sceneMenu() {
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   ctx.font = "30px Arial";
-  ctx.fillStyle = "#96FA9D";
+  ctx.fillStyle = "#ffffff";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  ctx.fillText("Queen Invaders", canvas.width / 2, canvas.height / 2 - 40);
+  ctx.fillText("Pingu's Bar", canvas.width / 2, canvas.height / 2 - 40);
   ctx.font = "16px Arial";
-  ctx.fillText("touch to start.", canvas.width / 2, canvas.height / 2);
+  ctx.fillText("Press start.", canvas.width / 2, canvas.height / 2);
 
   function startGame() {
     canvas.removeEventListener("click", startGame);
@@ -220,8 +220,22 @@ async function sceneGameOver() {
   ctx.font = "70px Arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  ctx.fillText("Game Over", game.width / 2, game.height / 2);
-  ctx.fillText("Tip $" + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
+  ctx.fillText("Game Over", game.width / 2, game.height / 2 - 50);
+
+  ctx.font = "50px Arial";
+
+  ctx.fillText(
+    "Tip $" + enemyController.score + "!",
+    game.width / 2,
+    game.height / 2 + 50
+  );
+
+  ctx.font = "30px Arial";
+  ctx.fillText(
+    "Press start to play again",
+    game.width / 2,
+    game.height / 2 + 130
+  );
 }
 
 function drawScore(score) {
@@ -247,7 +261,18 @@ function sceneVictory() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("You Win!", game.width / 2, game.height / 2);
-  ctx.fillText("Tip $" + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
+  ctx.fillText(
+    "Tip $" + enemyController.score + "!",
+    game.width / 2,
+    game.height / 2 + 70
+  );
+
+  ctx.font = "30px Arial";
+  ctx.fillText(
+    "Press start to play again",
+    game.width / 2,
+    game.height / 2 + 130
+  );
 }
 
 // use setInterval to update the game state
