@@ -2,6 +2,7 @@ import Enemy from "./Enemy.js";
 import MovingDirection from "./MovingDirection.js";
 
 export default class EnemyController {
+  score = 0;
   enemyMap = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -58,6 +59,7 @@ export default class EnemyController {
           this.enemyDeathSound.currentTime = 0;
           this.enemyDeathSound.play();
           enemyRow.splice(enemyIndex, 1);
+          this.score += 10;
         }
       });
     });
@@ -138,7 +140,7 @@ export default class EnemyController {
     });
   }
 
-  happy = () => {};
+  happy = () => { };
 
   createEnemies() {
     this.enemyMap.forEach((row, rowIndex) => {

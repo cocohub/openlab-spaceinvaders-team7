@@ -8,6 +8,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1000;
 canvas.height = 600;
 
+
+
 let background,
   playerBulletController,
   enemyBulletController,
@@ -39,7 +41,11 @@ async function gameLoop() {
     case "win":
       return sceneVictory();
   }
+
+
 }
+
+
 function initMenu() {
   background = new Image();
   background.src = "images/topographic-pattern.png";
@@ -104,6 +110,8 @@ function sceneLevel1() {
   player.draw(ctx);
   playerBulletController.draw(ctx);
   enemyBulletController.draw(ctx);
+  // console.log(enemyController);
+  drawScore(enemyController.score);
   if (enemyBulletController.collideWith(player)) scene = "lose";
   if (enemyController.collideWith(player)) scene = "lose";
   if (enemyController.enemyRows.length === 0) scene = "win";
@@ -127,6 +135,15 @@ async function sceneGameOver() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("Game Over", game.width / 2, game.height / 2);
+}
+
+function drawScore(score) {
+
+  ctx.fillStyle = "white";
+  ctx.font = "30px Arial";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText(score + " points", 150, 100);
 }
 
 function sceneVictory() {
