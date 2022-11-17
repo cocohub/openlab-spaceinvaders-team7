@@ -97,14 +97,14 @@ async function gameLoop() {
 
 function initMenu() {
   background = new Image();
-  background.src = "images/topographic-pattern.png";
+  background.src = "images/baren.png";
   background.onload = function () {
     isSceneInitilized = true;
   };
 }
 function initLevel1() {
   background = new Image();
-  background.src = "images/topographic-pattern.png";
+  background.src = "images/baren.png";
   playerBulletController = new BulletController({
     canvas,
     maxBulletsAtATime: 10,
@@ -161,7 +161,17 @@ function loseHealth() {
   }
 }
 
-function sceneLevel1() {
+async function sceneLevel1() {
+  await postLightScrollingText({
+    text: "GAME START",
+    text_speed: 0.12,
+    color: {
+      r: 0,
+      g: 255,
+      b: 0,
+    },
+  });
+
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   enemyController.draw(ctx);
   player.draw(ctx);
