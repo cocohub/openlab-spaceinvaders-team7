@@ -155,6 +155,7 @@ function sceneMenu() {
 
 function loseHealth() {
   player.health -= 1;
+  shakeDuration = 5;
 
   if (player.health <= 0) {
     scene = "lose";
@@ -189,6 +190,15 @@ async function sceneLevel1() {
   }
   if (enemyController.enemyRows.length === 0) scene = "win";
   enemyController.scoreMultiplier = player.health;
+
+  if (shakeDuration > 0) {
+    preShake();
+    shakeDuration--;
+  } else {
+    postShake();
+  }
+
+
 }
 
 let isGameOverRun = false;
@@ -242,3 +252,18 @@ function sceneVictory() {
 
 // use setInterval to update the game state
 setInterval(gameLoop, 1000 / 60);
+
+
+let shakeDuration = 0;
+
+function preShake() {
+
+  var dx = Math.random() * 10;
+  var dy = Math.random() * 10;
+
+  ctx.translate(dx, dy);
+}
+
+function postShake() {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
