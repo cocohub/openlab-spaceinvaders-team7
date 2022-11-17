@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .service import example
+from .service import example,get
 
 
 router = APIRouter(prefix="/highscore", tags=["Highscore"])
@@ -12,7 +12,7 @@ async def get_highscore():
 
 @router.get("/highscore/{name}")
 async def get_highscore_by_name(name: str):
-    return await example.get(name)
+    return await get(name)
 
 
 @router.post("/highscore")
