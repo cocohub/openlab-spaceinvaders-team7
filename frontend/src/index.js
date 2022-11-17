@@ -46,6 +46,8 @@ async function gameLoop() {
 }
 
 
+
+
 function initMenu() {
   background = new Image();
   background.src = "images/topographic-pattern.png";
@@ -135,6 +137,7 @@ async function sceneGameOver() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("Game Over", game.width / 2, game.height / 2);
+  ctx.fillText("Score " + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
 }
 
 function drawScore(score) {
@@ -153,6 +156,7 @@ function sceneVictory() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("You Win!", game.width / 2, game.height / 2);
+  ctx.fillText("Score " + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
 }
 
 // use setInterval to update the game state
