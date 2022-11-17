@@ -10,9 +10,9 @@ export default class Player {
     this.bulletController = playerBulletController;
 
     this.x = this.canvas.width / 2;
-    this.y = this.canvas.height - 75;
-    this.width = 200;
-    this.height = 200;
+    this.y = this.canvas.height - 150;
+    this.width = 150;
+    this.height = 150;
     this.image = new Image();
     this.image.src = "images/pingu_the_bartender.png";
 
