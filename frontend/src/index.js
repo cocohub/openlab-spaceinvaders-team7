@@ -188,6 +188,7 @@ async function sceneLevel1() {
     loseHealth();
   }
   if (enemyController.enemyRows.length === 0) scene = "win";
+  enemyController.scoreMultiplier = player.health;
 }
 
 let isGameOverRun = false;
@@ -210,15 +211,15 @@ async function sceneGameOver() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("Game Over", game.width / 2, game.height / 2);
-  ctx.fillText("Score " + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
+  ctx.fillText("Tip $" + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
 }
 
 function drawScore(score) {
   ctx.fillStyle = "white";
   ctx.font = "30px Arial";
   ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  ctx.fillText(score + " points", 80, 50);
+  ctx.textAlign = "left";
+  ctx.fillText("$" + score + " Tips", 10, 50);
 }
 
 function drawHp(score) {
@@ -236,7 +237,7 @@ function sceneVictory() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("You Win!", game.width / 2, game.height / 2);
-  ctx.fillText("Score " + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
+  ctx.fillText("Tip $" + enemyController.score + "!", game.width / 2, game.height / 2 + 70);
 }
 
 // use setInterval to update the game state
