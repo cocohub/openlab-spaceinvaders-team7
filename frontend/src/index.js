@@ -50,8 +50,17 @@ const buttonMap = {
   8: () => {
     console.log("SELECT");
   },
-  9: () => {
+  9: async () => {
     console.log("START");
+    await postLightScrollingText({
+      text: "GAME START",
+      text_speed: 0.12,
+      color: {
+        r: 0,
+        g: 255,
+        b: 0,
+      },
+    });
     isSceneInitilized = false;
     scene = "level1";
   },
@@ -157,10 +166,10 @@ async function loseHealth() {
   player.health -= 1;
   shakeDuration = 5;
 
-  if (!hasSentStartRequest) {
-    await postLightFill({ color: { r: 255, g: 0, b: 0 } });
-    hasSentStartRequest = true;
-  }
+  await postLightFill({ color: { r: 255, g: 0, b: 0 } });
+  setTimeout(async () => {
+    await postLightFill({ color: { r: 0, g: 0, b: 0 } });
+  }, 500);
 
   if (player.health <= 0) {
     scene = "lose";
@@ -168,19 +177,6 @@ async function loseHealth() {
 }
 
 async function sceneLevel1() {
-  if (!hasSentStartRequest) {
-    await postLightScrollingText({
-      text: "GAME START",
-      text_speed: 0.12,
-      color: {
-        r: 0,
-        g: 255,
-        b: 0,
-      },
-    });
-    hasSentStartRequest = true;
-  }
-
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   enemyController.draw(ctx);
   player.draw(ctx);
@@ -205,28 +201,10 @@ async function sceneLevel1() {
   } else {
     postShake();
   }
-
-
 }
 
 let isGameOverRun = false;
 async function sceneGameOver() {
-  if (!isGameOverRun) {
-    if (!hasSentStartRequest) {
-      await postLightScrollingText({
-        text: "GAME OVER",
-        text_speed: 0.12,
-        color: {
-          r: 255,
-          g: 0,
-          b: 0,
-        },
-      });
-      hasSentStartRequest = true;
-    }
-
-    isGameOverRun = true;
-  }
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";
   ctx.font = "70px Arial";
@@ -248,6 +226,22 @@ async function sceneGameOver() {
     game.width / 2,
     game.height / 2 + 130
   );
+
+  if (!isGameOverRun) {
+    setTimeout(async () => {
+      await postLightScrollingText({
+        text: "GAME OVER",
+        text_speed: 0.12,
+        color: {
+          r: 255,
+          g: 0,
+          b: 0,
+        },
+      });
+    }, 1000);
+
+    isGameOverRun = true;
+  }
 }
 
 function drawScore(score) {
@@ -290,11 +284,9 @@ function sceneVictory() {
 // use setInterval to update the game state
 setInterval(gameLoop, 1000 / 60);
 
-
 let shakeDuration = 0;
 
 function preShake() {
-
   var dx = Math.random() * 10;
   var dy = Math.random() * 10;
 
